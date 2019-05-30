@@ -30,7 +30,16 @@ race <- c(rep("dwarf", sample_size), rep("ogre", sample_size), rep("goblin", sam
 creatures <- data.frame(life_span, race)
 
 head(creatures)
+creatures[sample(1:dim(creatures)[1], size = 10), ]
+
 summary(creatures)
+
+summary(split(creatures, race)$dwarf)
+summary(split(creatures, race)$goblin)
+summary(split(creatures, race)$ogre)
+
+dplyr::glimpse(creatures)
+dplyr::summarise(creatures)
 
 ggplot(creatures, aes(x = life_span, y = ..density..)) +
     geom_histogram(binwidth = 1) +
