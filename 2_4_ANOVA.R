@@ -23,30 +23,26 @@ ls_o <- round(rnorm(n = sample_size, mean = m_o, sd = sd_o), 0)
 ls_g <- round(rnorm(n = sample_size, mean = m_g, sd = sd_g), 0)
 
 # combine data
-
-life_span <- c(ls_d, ls_o, ls_g)
+lifespan <- c(ls_d, ls_o, ls_g)
 race <- c(rep("dwarf", sample_size), rep("ogre", sample_size), rep("goblin", sample_size))
 
-creatures <- data.frame(life_span, race)
+creatures_data <- data.frame(lifespan, race)
 
+# shuffle rows
+creatures <- creatures_data[sample(1:dim(creatures_data)[1]), ]
+row.names(creatures) <- NULL
+
+# sneak peek
 head(creatures)
-creatures[sample(1:dim(creatures)[1], size = 10), ]
-
-summary(creatures)
-
-summary(split(creatures, race)$dwarf)
-summary(split(creatures, race)$goblin)
-summary(split(creatures, race)$ogre)
 
 dplyr::glimpse(creatures)
-dplyr::summarise(creatures)
 
-ggplot(creatures, aes(x = life_span, y = ..density..)) +
+ggplot(creatures, aes(x = lifespan, y = ..density..)) +
     geom_histogram(binwidth = 1) +
     facet_grid(race ~ .) +
     scale_x_continuous(breaks = seq(from = 50, to = 290, by = 20))
 
-boxplot(life_span ~ race, data = creatures)
+boxplot(lifespan ~ race, data = creatures)
 
 # check normality
 
